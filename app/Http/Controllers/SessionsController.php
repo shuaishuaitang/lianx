@@ -20,21 +20,19 @@ class SessionsController extends Controller
             'password' => 'required',
         ]);
 
-//        dd($credentials);
-
-        if (Auth::attempt($request->only('email', 'password'))){
+        if (Auth::attempt($request->only('email', 'password'),$request -> has('remember')) ){
             session() -> flash('success','欢迎回来');
             return redirect() -> route('users.show',[Auth::user()]);
         }else{
-            session()->flash('danger', '很抱歉，您的用户名和密码不匹配');
-            return redirect()->back();
+            session() -> flash('danger', '很抱歉，您的用户名和密码不匹配');
+            return redirect()-> back();
         }
 
     }
     public function destroy()
     {
         Auth::logout();
-        session()->flash('success', '您已成功退出！');
+        session() -> flash('success', '您已成功退出！');
         return redirect('login');
     }
 
