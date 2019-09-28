@@ -14,7 +14,9 @@
         @yield('content')
         {{--@include('layouts.footer')--}}
     </div>
+
 </div>
+@include('shared.messages')
 <script src="/js/app.js"></script>
 </body>
 </html>
