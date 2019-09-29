@@ -18,11 +18,13 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->name,
+        'activated' => true,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
         'is_admin' => false,
         'created_at' => $date_time,
         'updated_at' => $date_time,
+
     ];
 });
