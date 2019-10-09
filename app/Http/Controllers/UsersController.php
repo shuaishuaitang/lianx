@@ -30,7 +30,13 @@ class UsersController extends Controller
 
 
     public function show(User $user){
-        return view('users.show',compact('user'));
+        //查询个人所有的微博
+        //$status->created_at->diffForHumans()
+        //一般输出时间格式 2019-10-1 使用了diffforhumans 输出则是 多少年前
+        $statuses = $user -> statuses()
+                          -> orderBy('created_at','desc')
+                          -> paginate(30);
+        return view('users.show',compact('user','statuses'));
     }
     //判断数据
     public function store(Request $request){
@@ -85,6 +91,7 @@ class UsersController extends Controller
     }
     //接收更新数据
     public function update(User $user,Request $request){
+
         $this -> validate($request,[
            'name' => 'required|min:6',
            'password' => 'nullable|confirmed|min:6'
@@ -109,4 +116,5 @@ class UsersController extends Controller
         session() -> flash('success', '成功删除用户！');
         return back();
     }
+
 }
